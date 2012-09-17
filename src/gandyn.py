@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python
 import sys
 import getopt
 import xmlrpc.client
@@ -107,9 +107,10 @@ def usage(argv):
   print('\t-h --help                 : Displays this text')
   
 def main(argv, global_vars, local_vars):
-  options, remainder = getopt.getopt(argv[1:], 'c:h', ['config=', 'help'])
-  for opt, arg in options:
-    if opt in ('-c', '--config'):
+  try:
+    options, remainder = getopt.getopt(argv[1:], 'c:h', ['config=', 'help'])
+    for opt, arg in options:
+      if opt in ('-c', '--config'):
         config_file = arg
         #load config file
         exec(
@@ -117,9 +118,14 @@ def main(argv, global_vars, local_vars):
             global_vars,
             local_vars
         )
-    elif opt in ('-h', '--help'):
+      elif opt in ('-h', '--help'):
         usage(argv)
-        
+        exit(1)
+  except getopt.GetoptError as e:
+    print(e) 
+    usage(argv)
+    exit(1) 
+
   try:
     logging.basicConfig(format='%(asctime)s %(levelname)-8s %(message)s', datefmt='%a, %d %b %Y %H:%M:%S', level=LOG_LEVEL, filename=LOG_FILE)
     public_ip_retriever = ipretriever.adapter.IfConfig()
