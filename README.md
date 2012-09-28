@@ -1,11 +1,11 @@
-
 Gandyn
 ======
 
 Your server has a dynamic IP address and you use Gandi as domain name server ?
-Then this script is for you !
+Then Gandyn is for you !
 
-It is a unsecure quick written script that uses Gandi XML-RPC service to update your DNS record.
+This is an unsecure script based on [Comète's work](http://gerard.geekandfree.org/blog/2012/03/01/debarrassez-vous-de-dyndns-en-utilisant-lapi-de-gandi/).
+It uses Gandi XML-RPC service to update your DNS record.
 Server public IP address is retrieved from [http://ifconfig.me](http://ifconfig.me).
 
 As this is my first python "project", code might not be very pythonic. So, feel free to improve it :)
@@ -39,7 +39,7 @@ To run Gandyn, use the command :
 
 To get Gandyn run every 5 minutes, add the following line to your crontab.
 
-    */5 * * * * gandyn.py --config <path to the cnfig file> 
+    */5 * * * * gandyn.py --config <path to the config file> 
 
 Configuration
 -------------
