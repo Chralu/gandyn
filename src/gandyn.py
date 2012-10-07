@@ -1,4 +1,6 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
+# -*- coding:utf-8 -*-
+
 import sys
 import getopt
 import xmlrpc.client
@@ -19,7 +21,7 @@ class GandiDomainUpdater( object ):
   """Updates a gandi DNS record value."""
   def __init__(self, api_key, domain_name, record):
     """Constructor
-    
+
     Keyword arguments:
     api_key -- The gandi XML-RPC api key. You have to activate it on gandi website.
     domain_name -- The domain whose record will be updated
@@ -30,7 +32,7 @@ class GandiDomainUpdater( object ):
     self.record = record
     self.__api = xmlrpc.client.ServerProxy('https://rpc.gandi.net/xmlrpc/')
     self.__zone_id = None
-    
+
   def __get_active_zone_id( self ):
     """Retrieve the domain active zone id."""
     if self.__zone_id == None :
@@ -39,7 +41,7 @@ class GandiDomainUpdater( object ):
         self.domain_name
         )['zone_id']
     return self.__zone_id
-  
+
   def get_record_value( self ):
     """Retrieve current value for the record to update."""
     zone_id = self.__get_active_zone_id()
@@ -49,10 +51,10 @@ class GandiDomainUpdater( object ):
       0,
       self.record
       )[0]['value']
-      
+
   def update_record_value( self, new_value, ttl=300 ):
     """Updates record value.
-    
+
     Update is done on a new zone version. If an error occurs,
     that new zone is deleted. Else, it is activated.
     This is an attempt of rollback mechanism.
@@ -73,7 +75,7 @@ class GandiDomainUpdater( object ):
         new_zone_version,
         self.record
         )[0]['id']
-      
+
       #update record value
       new_record = self.record.copy()
       new_record.update({'value': new_value, 'ttl': ttl})
@@ -100,12 +102,12 @@ class GandiDomainUpdater( object ):
         zone_id,
         new_zone_version
         )
-      
+
 def usage(argv):
   print(argv[0],' [[-c | --config] <config file>] [-h | --help]')
   print('\t-c --config <config file> : Path to the config file')
   print('\t-h --help                 : Displays this text')
-  
+
 def main(argv, global_vars, local_vars):
   try:
     options, remainder = getopt.getopt(argv[1:], 'c:h', ['config=', 'help'])
@@ -122,23 +124,23 @@ def main(argv, global_vars, local_vars):
         usage(argv)
         exit(1)
   except getopt.GetoptError as e:
-    print(e) 
+    print(e)
     usage(argv)
-    exit(1) 
+    exit(1)
 
   try:
     logging.basicConfig(format='%(asctime)s %(levelname)-8s %(message)s', datefmt='%a, %d %b %Y %H:%M:%S', level=LOG_LEVEL, filename=LOG_FILE)
     public_ip_retriever = ipretriever.adapter.IfConfig()
     gandi_updater = GandiDomainUpdater(API_KEY, DOMAIN_NAME, RECORD)
-    
+
     #get DNS record ip address
     previous_ip_address = gandi_updater.get_record_value()
     logging.debug('DNS record IP address : %s', previous_ip_address)
-    
+
     #get current ip address
     current_ip_address = public_ip_retriever.get_public_ip()
     logging.debug('Current public IP address : %s', current_ip_address)
-    
+
     if current_ip_address != previous_ip_address:
       #update record value
       gandi_updater.update_record_value( current_ip_address, TTL )
@@ -151,4 +153,3 @@ def main(argv, global_vars, local_vars):
     logging.error('An error occured retrieving public IP address : %s', e)
 
 main(sys.argv, globals(), locals())
-
