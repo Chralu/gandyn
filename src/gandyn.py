@@ -68,24 +68,29 @@ class GandiDomainUpdater( object ):
         zone_id
         )
       logging.debug('DNS working on a new zone (version %s)', new_zone_version)
-      #get record id
-      a_record_id = self.__api.domain.zone.record.list(
+      record_list = self.__api.domain.zone.record.list(
         self.api_key,
         zone_id,
         new_zone_version,
         self.record
-        )[0]['id']
-
-      #update record value
-      new_record = self.record.copy()
-      new_record.update({'value': new_value, 'ttl': ttl})
-      updated_record = self.__api.domain.zone.record.update(
-        self.api_key,
-        zone_id,
-        new_zone_version,
-        {'id': a_record_id},
-        new_record
         )
+      #Update each record that matches the filter
+      for a_record in record_list:
+       #get record id
+       a_record_id = a_record['id']
+       a_record_name = a_record['name']
+       a_record_type = a_record['type']
+
+       #update record value
+       new_record = self.record.copy()
+       new_record.update({'name': a_record_name, 'type': a_record_type, 'value': new_value, 'ttl': ttl})
+       updated_record = self.__api.domain.zone.record.update(
+         self.api_key,
+         zone_id,
+         new_zone_version,
+         {'id': a_record_id},
+         new_record
+         )
     except xmlrpc.client.Fault as e:
       #delete updated zone
       if new_zone_version != None :
