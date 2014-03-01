@@ -20,7 +20,7 @@ Installation
 ------------
 
 ### Archlinux users:
-There is a 'gandyn' package in AUR.
+There is a 'gandyn-git' package in AUR.
 
 ### Others:
 The python standard way works.
