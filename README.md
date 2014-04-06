@@ -44,7 +44,7 @@ To run Gandyn, use the command :
 
 To get Gandyn run every 5 minutes, add the following line to your crontab.
 
-    */5 * * * * gandyn.py --config <path to the config file> 
+    */5 * * * * /usr/local/bin/gandyn.py --config <path to the config file>
 
 Configuration
 -------------
