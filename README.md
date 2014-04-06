@@ -29,6 +29,11 @@ The python standard way works.
     $ tar xvzf gandyn.tar.gz
     $ cd gandyn/src/
     # python setup.py install
+    
+    
+If you encounter issues with the xmlrpc.client missing module, you may try to install with Python 3.3 (or any other version 3 of python you may have)
+
+    $ python3.3 setup.py install
   
 Execution
 ---------
