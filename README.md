@@ -37,6 +37,10 @@ If you encounter issues with the xmlrpc.client missing module, you may try to in
   
 Execution
 ---------
+Add execute permission to gandyn.py
+
+    chmod +x /usr/local/bin/gandyn.py
+
 Gandyn gets its configuration from a simple python file. Config file syntax is described later.
 To run Gandyn, use the command :
 
