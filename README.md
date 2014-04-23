@@ -29,9 +29,18 @@ The python standard way works.
     $ tar xvzf gandyn.tar.gz
     $ cd gandyn/src/
     # python setup.py install
+    
+    
+If you encounter issues with the xmlrpc.client missing module, you may try to install with Python 3.3 (or any other version 3 of python you may have)
+
+    $ python3.3 setup.py install
   
 Execution
 ---------
+Add execute permission to gandyn.py
+
+    chmod +x /usr/local/bin/gandyn.py
+
 Gandyn gets its configuration from a simple python file. Config file syntax is described later.
 To run Gandyn, use the command :
 
@@ -39,7 +48,7 @@ To run Gandyn, use the command :
 
 To get Gandyn run every 5 minutes, add the following line to your crontab.
 
-    */5 * * * * gandyn.py --config <path to the config file> 
+    */5 * * * * /usr/local/bin/gandyn.py --config <path to the config file>
 
 Configuration
 -------------
