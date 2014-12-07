@@ -135,7 +135,7 @@ def main(argv, global_vars, local_vars):
 
   try:
     logging.basicConfig(format='%(asctime)s %(levelname)-8s %(message)s', datefmt='%a, %d %b %Y %H:%M:%S', level=LOG_LEVEL, filename=LOG_FILE)
-    public_ip_retriever = ipretriever.adapter.IfConfig()
+    public_ip_retriever = ipretriever.adapter.IPEcho()
     gandi_updater = GandiDomainUpdater(API_KEY, DOMAIN_NAME, RECORD)
 
     #get DNS record ip address
