@@ -1,4 +1,12 @@
-Gandyn
+Disclaimer
+=====
+
+This project is no longer maintained.
+You should now use [Danamir's dyn-gandi](https://github.com/Danamir/dyn-gandi) as it supports new Gandi API.
+
+To contributors : Sincere thanks for your pertinent Pull Requests and Issues reports during the last 6 years. `<3`
+
+Gandyn 
 ======
 
 Your server has a dynamic IP address and you use Gandi as domain name server?
